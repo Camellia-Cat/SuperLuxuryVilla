@@ -1,68 +1,67 @@
-# Theme System Documentation
+# 主题系统文档
+`- MQ`
+## 概述
 
-## Overview
+本项目实现了一个完整的主题系统，支持浅色模式和深色模式，每种模式均有多种配色方案。该主题系统基于 CSS 变量和 Tailwind CSS 构建，使得应用程序的样式保持一致变得简单且高效。
 
-This project implements a comprehensive theme system with light and dark modes, each with multiple color schemes. The theme system is built using CSS variables and Tailwind CSS, making it easy to apply consistent styling across the application.
+## 主题结构
 
-## Theme Structure
+主题系统包括：
 
-The theme system consists of:
+1. **默认浅色主题** - 应用于 `:root`
+2. **浅色主题变体**：
+   - `.theme-light-blue` - 蓝色系浅色主题
+   - `.theme-light-pink` - 粉色系浅色主题
+   - `.theme-light-red` - 红色系浅色主题
+   - `.theme-light-BlueViolet` - 蓝紫色系浅色主题
+   - `.theme-light-SlateBlue` - 石板蓝色系浅色主题
 
-1. **Default Light Theme** - Applied to `:root`
-2. **Light Theme Variations**:
-   - `.theme-light-blue` - Blue-based light theme
-   - `.theme-light-pink` - Pink-based light theme
-   - `.theme-light-red` - Red-based light theme
-   - `.theme-light-BlueViolet` - Blue-violet-based light theme
-   - `.theme-light-SlateBlue` - Slate blue-based light theme
+3. **默认深色主题** - 使用 `.dark` 类
+4. **深色主题变体**：
+   - `.dark.theme-night-green` - 绿色系深色主题
+   - `.dark.theme-night-yellow` - 黄色系深色主题
+   - `.dark.theme-night-DeepPink` - 深粉色系深色主题
 
-3. **Default Dark Theme** - Applied with `.dark` class
-4. **Dark Theme Variations**:
-   - `.dark.theme-night-green` - Green-based dark theme
-   - `.dark.theme-night-yellow` - Yellow-based dark theme
-   - `.dark.theme-night-DeepPink` - Deep pink-based dark theme
+## 使用方法
 
-## How to Use
+### 应用主题
 
-### Applying Themes
-
-To apply a theme, add the appropriate class to the root HTML element:
-
+在根 HTML 根元素中加入适当的类即可应用主题：
 ```html
-<!-- For light mode with blue theme -->
+<!-- 对于具有蓝色主题的浅色模式 -->
 <html class="theme-light-blue">
 
-<!-- For dark mode with green theme -->
+<!-- 对于具有绿色主题的深色模式 -->
 <html class="dark theme-night-green">
 ```
 
 ### Switching Themes
 
-You can switch themes dynamically using JavaScript:
+可以使用 JavaScript 动态切换主题：
 
 ```javascript
-// Switch to light blue theme
+// 切换到浅蓝色主题
 document.documentElement.className = 'theme-light-blue';
 
-// Switch to dark green theme
+// 切换到深绿色主题
 document.documentElement.className = 'dark theme-night-green';
 ```
 
 ### Creating a Theme Switcher Component
 
-Example of a simple theme switcher in Vue:
+简单主题切换器示例:
 
 ```vue
 <template>
   <div>
-    <h3>Light Themes</h3>
+    <h3>浅色主题</h3>
     <button @click="setTheme('theme-light-blue')">Blue</button>
     <button @click="setTheme('theme-light-pink')">Pink</button>
     <button @click="setTheme('theme-light-red')">Red</button>
     <button @click="setTheme('theme-light-BlueViolet')">Blue Violet</button>
     <button @click="setTheme('theme-light-SlateBlue')">Slate Blue</button>
     
-    <h3>Dark Themes</h3>
+    <h3>深色主题</h3>
     <button @click="setTheme('dark theme-night-green')">Green</button>
     <button @click="setTheme('dark theme-night-yellow')">Yellow</button>
     <button @click="setTheme('dark theme-night-DeepPink')">Deep Pink</button>
@@ -74,12 +73,12 @@ export default {
   methods: {
     setTheme(theme) {
       document.documentElement.className = theme;
-      // Optionally save the theme preference to localStorage
+      // 将主题首选项保存到 localStorage
       localStorage.setItem('theme', theme);
     }
   },
   mounted() {
-    // Load saved theme preference if available
+    // 如果本地可用？加载保存的主题首选项
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       this.setTheme(savedTheme);
@@ -89,55 +88,56 @@ export default {
 </script>
 ```
 
-## CSS Variables
+## CSS 变量
 
-Each theme defines the following CSS variables:
+每个主题定义以下 CSS 变量：
 
-- `--background` - Main background color
-- `--foreground` - Main text color
-- `--card` - Card background color
-- `--card-foreground` - Card text color
-- `--popover` - Popover background color
-- `--popover-foreground` - Popover text color
-- `--primary` - Primary action color
-- `--primary-foreground` - Text color on primary elements
-- `--secondary` - Secondary action color
-- `--secondary-foreground` - Text color on secondary elements
-- `--muted` - Muted background color
-- `--muted-foreground` - Text color on muted elements
-- `--accent` - Accent color
-- `--accent-foreground` - Text color on accent elements
-- `--destructive` - Destructive action color
-- `--destructive-foreground` - Text color on destructive elements
-- `--border` - Border color
-- `--input` - Input element border color
-- `--ring` - Focus ring color
-- `--chart-1` through `--chart-5` - Colors for charts and data visualization
+- `--background` - 主背景颜色
+- `--foreground` - 主文字颜色
+- `--card` - 卡片背景颜色
+- `--card-foreground` - 卡片文字颜色
+- `--popover` - 弹出框背景颜色
+- `--popover-foreground` - 弹出框文字颜色
+- `--primary` - 主操作颜色
+- `--primary-foreground` - 主操作元素的文字颜色
+- `--secondary` - 次操作颜色
+- `--secondary-foreground` - 次操作元素的文字颜色
+- `--muted` - 弱背景颜色
+- `--muted-foreground` - 弱元素文字颜色
+- `--accent` - 强调颜色
+- `--accent-foreground` - 强调元素文字颜色
+- `--destructive` - 危险操作颜色
+- `--destructive-foreground` - 危险操作元素文字颜色
+- `--border` - 边框颜色
+- `--input` - 输入元素边框颜色
+- `--ring` - 焦点环颜色
+- `--chart-1` 到 `--chart-5` - 图表与数据可视化使用的颜色
 
-## Extending the Theme System
 
-To add a new theme:
+## 扩展主题系统
 
-1. Add a new class in `src/assets/main.css` following the existing pattern
-2. Define all the necessary CSS variables for the theme
-3. Use HSL color format for consistency (e.g., `--primary: 210 100% 50%;`)
+要添加新主题：
 
-Example of adding a new light theme:
+1. 在 `src/assets/main.css` 中添加一个新的类，遵循现有模式
+2. 定义主题的所有必要 CSS 变量
+3. 为保持一致性，使用 HSL 色彩格式（如 `--primary: 210 100% 50%;`）
+
+以下是添加新的浅色主题的示例：
 
 ```css
-/* Light Theme - Teal */
+/* 浅色主题 - 青色 */
 .theme-light-teal {
   --background: 180 50% 98%;
   --foreground: 180 50% 10%;
   --card: 180 50% 100%;
   --card-foreground: 180 50% 10%;
-  /* Define all other variables... */
+  /* 定义所有其他变量... */
 }
 ```
 
-## Best Practices
+## 结论
 
-1. Always use the CSS variables instead of hardcoding colors
-2. Use the Tailwind utility classes that reference these variables (e.g., `bg-background`, `text-foreground`)
-3. Test your UI in all themes to ensure good contrast and readability
-4. Consider accessibility when designing new themes (ensure sufficient contrast ratios)
+1. 始终使用 CSS 变量，而不是硬编码颜色
+2. 使用引用这些变量的 Tailwind 实用类（如 `bg-background`、`text-foreground`）
+3. 在所有主题中测试 UI，确保对比度和可读性良好
+4. 设计新主题时考虑无障碍性（确保足够的对比度比率）
