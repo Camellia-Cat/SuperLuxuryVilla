@@ -12,9 +12,9 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      // 路由级代码拆分
+      // 生成一个单独的数据块 （About.[hash].js）
+      // 在访问路由时延迟加载.
       component: () => import('../views/AboutView.vue')
     }
   ]
