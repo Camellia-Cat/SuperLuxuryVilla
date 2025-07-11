@@ -187,7 +187,8 @@ export default {
         { label: '粉色', value: 'theme-light-pink', color: '#e83e8c' },
         { label: '红色', value: 'theme-light-red', color: '#dc3545' },
         { label: '蓝紫色', value: 'theme-light-BlueViolet', color: '#8a2be2' },
-        { label: '青蓝色', value: 'theme-light-SlateBlue', color: '#6a5acd' }
+        { label: '青蓝色', value: 'theme-light-SlateBlue', color: '#6a5acd' },
+        { label: '赛博朋克', value: 'theme-light-cyberpunk', color: '#ffc300' }
       ],
       // 默认深色主题
       defaultDarkThemes: [

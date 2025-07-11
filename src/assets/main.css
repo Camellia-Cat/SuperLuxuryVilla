@@ -187,7 +187,98 @@
     --chart-4: 230 80% 65%;
     --chart-5: 250 70% 60%;
   }
+  /* Light Theme - Cyberpunk 2077 */
+  /*.theme-light-cyberpunk {*/
+  /*  !* 背景采用深色调,营造夜之城氛围 *!*/
+  /*  --background: 235 25% 15%;*/
+  /*  --foreground: 0 0% 100%;*/
 
+  /*  !* 卡片和弹出层使用稍浅的背景 *!*/
+  /*  --card: 235 25% 20%;*/
+  /*  --card-foreground: 0 0% 100%;*/
+  /*  --popover: 235 25% 20%;*/
+  /*  --popover-foreground: 0 0% 100%;*/
+
+  /*  !* 主色调使用赛博朋克标志性的亮粉色 *!*/
+  /*  --primary: 320 100% 65%;*/
+  /*  --primary-foreground: 0 0% 100%;*/
+
+  /*  !* 次要色调用亮蓝色 *!*/
+  /*  --secondary: 190 100% 60%;*/
+  /*  --secondary-foreground: 0 0% 100%;*/
+
+  /*  !* 静音色调保持深色系 *!*/
+  /*  --muted: 235 25% 25%;*/
+  /*  --muted-foreground: 0 0% 70%;*/
+
+  /*  !* 强调色使用赛博朋克的黄色 *!*/
+  /*  --accent: 45 100% 50%;*/
+  /*  --accent-foreground: 0 0% 100%;*/
+
+  /*  !* 危险色保持红色 *!*/
+  /*  --destructive: 0 100% 50%;*/
+  /*  --destructive-foreground: 0 0% 100%;*/
+
+  /*  !* 边框和输入框使用深色 *!*/
+  /*  --border: 235 25% 25%;*/
+  /*  --input: 235 25% 20%;*/
+
+  /*  !* 环形使用主色调 *!*/
+  /*  --ring: 320 100% 65%;*/
+
+  /*  !* 图表颜色使用赛博朋克特征色 *!*/
+  /*  --chart-1: 320 100% 65%; !* 亮粉 *!*/
+  /*  --chart-2: 190 100% 60%; !* 亮蓝 *!*/
+  /*  --chart-3: 45 100% 50%;  !* 黄色 *!*/
+  /*  --chart-4: 280 100% 65%; !* 紫色 *!*/
+  /*  --chart-5: 160 100% 50%; !* 青色 *!*/
+  /*}*/
+  /* Light Theme - Cyberpunk 2077 Netrunner */
+  .theme-light-cyberpunk {
+    /* 基础背景使用深黑色，模拟赛博朋克的夜晚场景 */
+    --background: 0 0% 8%;
+    --foreground: 0 100% 65%;  /* 深红色作为主要文字颜色 */
+
+    /* 卡片和弹出层使用略深的红色背景 */
+    --card: 0 20% 12%;
+    --card-foreground: 150 100% 60%; /* 荧光绿色文字 */
+    --popover: 0 20% 12%;
+    --popover-foreground: 150 100% 60%;
+
+    /* 主色调使用赛博朋克标志性的深红色 */
+    --primary: 0 100% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    /* 次要色调使用荧光绿，模拟黑客效果 */
+    --secondary: 150 100% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* 静音色调保持暗红色调 */
+    --muted: 0 30% 15%;
+    --muted-foreground: 0 70% 65%;
+
+    /* 强调色使用赛博朋克的黄色 */
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    /* 危险色使用更亮的红色 */
+    --destructive: 0 100% 70%;
+    --destructive-foreground: 0 0% 0%;
+
+    /* 边框使用带暗红色光晕效果 */
+    --border: 0 50% 20%;
+    --input: 0 20% 15%;
+
+    /* 环形使用主红色 */
+    --ring: 0 100% 65%;
+
+    /* 图表颜色使用赛博朋克配色 */
+    --chart-1: 0 100% 65%;    /* 深红色 */
+    --chart-2: 150 100% 45%;  /* 黑客绿 */
+    --chart-3: 45 100% 50%;   /* 赛博朋克黄 */
+    --chart-4: 320 100% 65%;  /* 霓虹粉 */
+    --chart-5: 190 100% 50%;  /* 电子蓝 */
+  }
   /* Default Dark Theme (Base) */
   .dark {
     --background: 0 0% 3.9%;

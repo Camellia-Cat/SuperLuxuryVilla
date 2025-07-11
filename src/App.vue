@@ -32,7 +32,6 @@ const handlePanelToggle = (isOpen) => {
       </nav>
     </div>
   </header>
-
   <RouterView />
 </template>
 
