@@ -188,13 +188,14 @@ export default {
         { label: '红色', value: 'theme-light-red', color: '#dc3545' },
         { label: '蓝紫色', value: 'theme-light-BlueViolet', color: '#8a2be2' },
         { label: '青蓝色', value: 'theme-light-SlateBlue', color: '#6a5acd' },
-        { label: '赛博朋克', value: 'theme-light-cyberpunk', color: '#ffc300' }
+        { label: '赛博朋克', value: 'theme-light-cyberpunk', color: '#ffc300' },
       ],
       // 默认深色主题
       defaultDarkThemes: [
         { label: '绿色', value: 'dark theme-night-green', color: '#28a745' },
         { label: '黄色', value: 'dark theme-night-yellow', color: '#ffc107' },
-        { label: '深粉色', value: 'dark theme-night-DeepPink', color: '#ff1493' }
+        { label: '深粉色', value: 'dark theme-night-DeepPink', color: '#ff1493' },
+        // { label: '黑神话', value: 'dark theme-night-Wukong', color: '#ff6b00' }
       ]
     }
   },

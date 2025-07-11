@@ -23,8 +23,8 @@ const handlePanelToggle = (isOpen) => {
           <ThemeSwitcher 
             position="bottom-right"
             title="选择主题"
-            :showPreview="true"
-            :closeOnSelect="true"
+            :showPreview="false"
+            :closeOnSelect="false"
             @theme-changed="handleThemeChanged"
             @panel-toggle="handlePanelToggle"
           />

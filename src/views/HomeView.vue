@@ -98,10 +98,9 @@ const submitForm = () => {
   alert('表单已提交！我会尽快回复您。');
   contactForm.value = { name: '', email: '', phone: '', message: '' };
 };
-
 // GSAP animations
 onMounted(() => {
-  // Hero section entrance animation
+  // 贡献榜单部分入口动画
   gsap.from('.hero-content', {
     duration: 1,
     y: 50,
@@ -110,7 +109,7 @@ onMounted(() => {
     ease: 'power3.out'
   });
 
-  // Projects section scroll animation
+  // Projects 部分滚动动画
   gsap.from('.project-card', {
     scrollTrigger: {
       trigger: '.projects-section',
@@ -124,7 +123,7 @@ onMounted(() => {
     ease: 'power3.out'
   });
 
-  // Skills section scroll animation
+  // 技能部分滚动动画
   gsap.from('.skill-card', {
     scrollTrigger: {
       trigger: '.skills-section',
@@ -137,8 +136,8 @@ onMounted(() => {
     stagger: 0.1,
     ease: 'back.out(1.7)'
   });
-
-  // 3D Models section animation
+  // 动画部分
+  // 3D模型部分动画
   gsap.from('.models-section .section-title, .models-section .section-description, .model-placeholder', {
     scrollTrigger: {
       trigger: '.models-section',
@@ -152,7 +151,7 @@ onMounted(() => {
     ease: 'power3.out'
   });
 
-  // Contributors section animation
+  // 贡献者部分动画
   gsap.from('.contributor-card', {
     scrollTrigger: {
       trigger: '.contributors-section',
@@ -166,7 +165,7 @@ onMounted(() => {
     ease: 'power3.out'
   });
 
-  // Contact section animation
+  // 联系部分动画
   gsap.from('.contact-form-card, .contact-info-card', {
     scrollTrigger: {
       trigger: '.contact-section',

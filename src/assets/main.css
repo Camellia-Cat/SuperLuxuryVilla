@@ -159,7 +159,6 @@
     --chart-4: 260 80% 65%;
     --chart-5: 280 70% 60%;
   }
-
   /* Light Theme - SlateBlue */
   .theme-light-SlateBlue {
     --background: 240 50% 98%;
@@ -187,53 +186,7 @@
     --chart-4: 230 80% 65%;
     --chart-5: 250 70% 60%;
   }
-  /* Light Theme - Cyberpunk 2077 */
-  /*.theme-light-cyberpunk {*/
-  /*  !* 背景采用深色调,营造夜之城氛围 *!*/
-  /*  --background: 235 25% 15%;*/
-  /*  --foreground: 0 0% 100%;*/
-
-  /*  !* 卡片和弹出层使用稍浅的背景 *!*/
-  /*  --card: 235 25% 20%;*/
-  /*  --card-foreground: 0 0% 100%;*/
-  /*  --popover: 235 25% 20%;*/
-  /*  --popover-foreground: 0 0% 100%;*/
-
-  /*  !* 主色调使用赛博朋克标志性的亮粉色 *!*/
-  /*  --primary: 320 100% 65%;*/
-  /*  --primary-foreground: 0 0% 100%;*/
-
-  /*  !* 次要色调用亮蓝色 *!*/
-  /*  --secondary: 190 100% 60%;*/
-  /*  --secondary-foreground: 0 0% 100%;*/
-
-  /*  !* 静音色调保持深色系 *!*/
-  /*  --muted: 235 25% 25%;*/
-  /*  --muted-foreground: 0 0% 70%;*/
-
-  /*  !* 强调色使用赛博朋克的黄色 *!*/
-  /*  --accent: 45 100% 50%;*/
-  /*  --accent-foreground: 0 0% 100%;*/
-
-  /*  !* 危险色保持红色 *!*/
-  /*  --destructive: 0 100% 50%;*/
-  /*  --destructive-foreground: 0 0% 100%;*/
-
-  /*  !* 边框和输入框使用深色 *!*/
-  /*  --border: 235 25% 25%;*/
-  /*  --input: 235 25% 20%;*/
-
-  /*  !* 环形使用主色调 *!*/
-  /*  --ring: 320 100% 65%;*/
-
-  /*  !* 图表颜色使用赛博朋克特征色 *!*/
-  /*  --chart-1: 320 100% 65%; !* 亮粉 *!*/
-  /*  --chart-2: 190 100% 60%; !* 亮蓝 *!*/
-  /*  --chart-3: 45 100% 50%;  !* 黄色 *!*/
-  /*  --chart-4: 280 100% 65%; !* 紫色 *!*/
-  /*  --chart-5: 160 100% 50%; !* 青色 *!*/
-  /*}*/
-  /* Light Theme - Cyberpunk 2077 Netrunner */
+  /*cyberpunk*/
   .theme-light-cyberpunk {
     /* 基础背景使用深黑色，模拟赛博朋克的夜晚场景 */
     --background: 0 0% 8%;
@@ -279,7 +232,7 @@
     --chart-4: 320 100% 65%;  /* 霓虹粉 */
     --chart-5: 190 100% 50%;  /* 电子蓝 */
   }
-  /* Default Dark Theme (Base) */
+  /*暗黑主题块*/
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -306,7 +259,6 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-
   /* Dark Theme - Green */
   .dark.theme-night-green {
     --background: 150 15% 5%;
@@ -389,6 +341,42 @@
     --chart-3: 310 90% 45%;
     --chart-4: 340 100% 40%;
     --chart-5: 320 90% 55%;
+  }
+  /* Dark Theme - Wukong */
+  .dark.theme-night-Wukong {
+    --background: 20 15% 10%; /* 深墨色背景 */
+    --foreground: 30 30% 95%; /* 暖金色文字 */
+
+    --card: 20 15% 15%; /* 略深的墨色卡片背景 */
+    --card-foreground: 30 30% 95%; /* 暖金色文字 */
+    --popover: 20 15% 15%; /* 略深的墨色弹出层背景 */
+    --popover-foreground: 30 30% 95%; /* 暖金色文字 */
+
+    --primary: 45 80% 60%; /* 明亮的金色作为主色调 */
+    --primary-foreground: 0 0% 10%; /* 深色文字 */
+
+    --secondary: 0 70% 50%; /* 赤红色作为次要色调 */
+    --secondary-foreground: 0 0% 10%; /* 深色文字 */
+
+    --muted: 20 10% 20%; /* 深墨色静音色调 */
+    --muted-foreground: 30 20% 70%; /* 略浅的暖金色文字 */
+
+    --accent: 45 85% 50%; /* 更加明亮的金色强调色 */
+    --accent-foreground: 0 0% 10%; /* 深色文字 */
+
+    --destructive: 0 80% 45%; /* 深红色危险色 */
+    --destructive-foreground: 0 0% 100%; /* 白色文字 */
+
+    --border: 30 20% 25%; /* 深褐色边框 */
+    --input: 25 15% 20%; /* 略深的墨色输入框背景 */
+
+    --ring: 45 80% 60%; /* 金色环形 */
+
+    --chart-1: 45 80% 60%; /* 金色图表颜色 */
+    --chart-2: 0 70% 50%; /* 赤红色图表颜色 */
+    --chart-3: 45 85% 50%; /* 明亮的金色图表颜色 */
+    --chart-4: 15 60% 45%; /* 赤褐色图表颜色 */
+    --chart-5: 30 70% 60%; /* 暖橙色图表颜色 */
   }
 }
 
