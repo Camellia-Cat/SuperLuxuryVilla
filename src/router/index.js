@@ -16,6 +16,11 @@ const router = createRouter({
       // 生成一个单独的数据块 （About.[hash].js）
       // 在访问路由时延迟加载.
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/model/:id',
+      name: 'model-detail',
+      component: () => import('../views/ModelDetailView.vue')
     }
   ]
 })

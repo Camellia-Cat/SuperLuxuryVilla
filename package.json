@@ -9,13 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tresjs/cientos": "^4.3.1",
+    "@tresjs/core": "^4.3.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "file-saver": "^2.0.5",
     "gsap": "^3.13.0",
+    "jszip": "^3.10.1",
     "lucide-vue-next": "^0.525.0",
     "reka-ui": "^2.3.2",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.178.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
