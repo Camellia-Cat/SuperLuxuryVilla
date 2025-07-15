@@ -3,8 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
+import { templateCompilerOptions } from '@tresjs/core'
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue({
+    ...templateCompilerOptions
+  })],
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],

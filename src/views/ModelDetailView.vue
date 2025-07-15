@@ -1,169 +1,147 @@
 <script setup>
 import { ref, onMounted, computed, Suspense } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ArrowLeft, Download } from 'lucide-vue-next';
-import { TresCanvas } from '@tresjs/core';
-import { OrbitControls, GLTFModel as TresGLTF, Grid as TresGrid } from '@tresjs/cientos';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import { OrbitControls, GLTFModel } from '@tresjs/cientos';
 
 const route = useRoute();
 const router = useRouter();
 const modelId = computed(() => route.params.id);
-const isLoading = ref(false);
-const downloadProgress = ref(0);
 
 // 模型数据
-const models = {
-  // 'antonius': { name: 'Antonius', path: '/res/antonius/scene.gltf', directory: '/public/res/antonius' },
-  'basketball': { name: 'Basketball', path: '/res/basketball/scene.gltf', directory: '/public/res/basketball' },
-  'buddha': { name: 'Buddha', path: '/res/buddha/scene.gltf', directory: '/public/res/buddha' },
-  // 'decoratedcup': { name: 'Decorated Cup', path: '/res/decoratedcup/scene.gltf', directory: '/public/res/decoratedcup' },
-  'kookpot': { name: 'Kookpot', path: '/res/kookpot/scene.gltf', directory: '/public/res/kookpot' }
-};
+const models = ref([
+  // { id: 'antonius', name: 'Antonius', path: '/res/antonius/scene.gltf', description: '古典风格的装饰品，展现精湛的工艺和历史韵味。' },
+  { id: 'basketball', name: 'Basketball', path: '/res/basketball/scene.gltf', description: '高精度篮球3D模型，适用于体育游戏和虚拟现实应用。' },
+  { id: 'buddha', name: 'Buddha', path: '/res/buddha/scene.gltf', description: '精致的佛像模型，展现东方艺术的神秘与庄严。' },
+  // { id: 'decoratedcup', name: 'Decorated Cup', path: '/res/decoratedcup/scene.gltf', description: '精美装饰的杯子，适合用于室内场景和产品展示。' },
+  { id: 'kookpot', name: 'Kookpot', path: '/res/kookpot/scene.gltf', description: '精致的厨房用具模型，展现现代家居的实用与美观。' }
+]);
 
+// 获取当前模型
 const currentModel = computed(() => {
-  return models[modelId.value] || null;
+  return models.value.find(model => model.id === modelId.value) || null;
 });
 
-// 返回首页
+// 返回列表页
 const goBack = () => {
   router.push('/');
-};
-
-// 下载模型
-const downloadModel = async () => {
-  if (!currentModel.value) return;
-
-  isLoading.value = true;
-  downloadProgress.value = 0;
-
-  try {
-    const zip = new JSZip();
-    const modelFolder = zip.folder(currentModel.value.name);
-
-    // 获取模型文件列表
-    const modelFiles = await fetchModelFiles(currentModel.value.directory);
-
-    // 添加文件到zip
-    for (let i = 0; i < modelFiles.length; i++) {
-      const file = modelFiles[i];
-      const response = await fetch(file.path);
-      const blob = await response.blob();
-      modelFolder.file(file.name, blob);
-
-      // 更新进度
-      downloadProgress.value = Math.round((i + 1) / modelFiles.length * 100);
-    }
-
-    // 生成并下载zip文件
-    const content = await zip.generateAsync({ type: 'blob' });
-    saveAs(content, `${currentModel.value.name}.zip`);
-
-    isLoading.value = false;
-  } catch (error) {
-    console.error('下载模型出错:', error);
-    isLoading.value = false;
-  }
-};
-
-// 模拟获取模型文件列表
-const fetchModelFiles = async (directory) => {
-  // 在实际应用中，这里应该是一个API调用来获取目录中的所有文件
-  const files = [
-    { name: 'scene.gltf', path: `${directory}/scene.gltf` },
-    { name: 'scene.bin', path: `${directory}/scene.bin` }
-  ];
-
-  // 检查模型ID，为有贴图的模型添加贴图文件
-  if (modelId.value === 'basketball' || modelId.value === 'decoratedcup') {
-    // 这些模型有贴图文件夹
-    files.push(
-      { name: 'textures/texture_diffuse.png', path: `${directory}/textures/texture_diffuse.png` },
-      { name: 'textures/texture_normal.png', path: `${directory}/textures/texture_normal.png` },
-      { name: 'textures/texture_metallicRoughness.png', path: `${directory}/textures/texture_metallicRoughness.png` }
-    );
-  }
-
-  return files;
 };
 </script>
 
 <template>
-  <div class="model-detail-view min-h-screen bg-background p-4 md:p-8">
+  <div class="model-detail-view py-16 px-4 md:px-8">
     <div class="max-w-6xl mx-auto">
-      <!-- 头部导航 -->
-      <div class="flex items-center mb-6">
-        <button @click="goBack" class="flex items-center text-foreground hover:text-primary transition-colors">
-          <ArrowLeft class="w-5 h-5 mr-2" />
-          <span>返回</span>
-        </button>
-      </div>
+      <!-- 返回按钮 -->
+      <button 
+        @click="goBack" 
+        class="mb-6 flex items-center text-primary hover:text-primary/80 transition-colors"
+      >
+        <span class="mr-2">←</span> 返回列表
+      </button>
 
-      <!-- 模型信息 -->
-      <div v-if="currentModel" class="mb-8">
-        <h1 class="text-3xl font-bold text-foreground mb-2">{{ currentModel.name }}</h1>
-        <p class="text-foreground/70">3D模型详情</p>
-      </div>
-
-      <!-- 模型查看器 -->
-      <div v-if="currentModel" class="model-viewer-container bg-background border border-border rounded-lg overflow-hidden mb-6 relative">
-        <!-- 关闭按钮 -->
-        <div class="absolute top-2 right-2 z-10">
-          <button @click="goBack" class="bg-background/80 hover:bg-background text-foreground rounded-full p-1 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
+      <div v-if="currentModel" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- 3D模型展示 -->
+        <div class="model-viewer rounded-lg overflow-hidden border border-border h-[500px]">
+          <TresCanvas shadows alpha>
+            <TresPerspectiveCamera :position="[0, 0, 0.5]" />
+            <OrbitControls />
+            <Suspense>
+              <GLTFModel :path="currentModel.path" draco />
+            </Suspense>
+            <TresDirectionalLight :position="[-4, 8, 4]" :intensity="4" cast-shadow />
+          </TresCanvas>
         </div>
 
-        <Suspense>
-          <template #default>
-            <TresCanvas>
-              <TresGLTF 
-                :path="currentModel?.path" 
-                :scale="[1, 1, 1]" 
-                :rotation="[0, Math.PI / 4, 0]" 
-                :disable-textures="true"
-                :material-props="{ map: null }" 
-                :material-type="'MeshBasicMaterial'"
-              />
-              <TresGrid :cell-size="1" :cell-thickness="1" :cell-color="'#6e6e6e'" :section-size="2" :section-thickness="1" :section-color="'#9d4b4b'" :fade-distance="30" :fade-strength="1" />
-              <OrbitControls />
-            </TresCanvas>
-          </template>
-          <template #fallback>
-            <div class="flex items-center justify-center h-full w-full bg-background">
-              <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        <!-- 模型详情 -->
+        <div class="model-info">
+          <h1 class="text-3xl font-bold mb-4">{{ currentModel.name }}</h1>
+          <p class="text-foreground/70 mb-6">{{ currentModel.description }}</p>
+
+          <div class="specs mb-8">
+            <h2 class="text-xl font-semibold mb-3">模型规格</h2>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="spec-item">
+                <span class="block text-sm text-foreground/60">文件格式</span>
+                <span class="font-medium">GLTF/GLB</span>
+              </div>
+              <div class="spec-item">
+                <span class="block text-sm text-foreground/60">多边形数量</span>
+                <span class="font-medium">约 10,000</span>
+              </div>
+              <div class="spec-item">
+                <span class="block text-sm text-foreground/60">纹理</span>
+                <span class="font-medium">4K PBR</span>
+              </div>
+              <div class="spec-item">
+                <span class="block text-sm text-foreground/60">动画</span>
+                <span class="font-medium">无</span>
+              </div>
             </div>
-          </template>
-        </Suspense>
+          </div>
+
+          <div class="actions">
+            <button class="px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors w-full md:w-auto">
+              下载模型
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- 下载按钮 -->
-      <div class="flex justify-center">
+      <!-- 模型不存在的提示 -->
+      <div v-else class="text-center py-16">
+        <h2 class="text-2xl font-bold mb-4">模型不存在</h2>
+        <p class="text-foreground/70 mb-6">抱歉，您请求的模型不存在或已被移除。</p>
         <button 
-          @click="downloadModel" 
-          class="download-button flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-md font-medium transition-colors"
-          :disabled="isLoading"
+          @click="goBack" 
+          class="px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
         >
-          <Download v-if="!isLoading" class="w-5 h-5 mr-2" />
-          <span v-if="!isLoading">下载模型</span>
-          <span v-else>下载中... {{ downloadProgress }}%</span>
+          返回列表
         </button>
+      </div>
+
+      <!-- 相关模型 -->
+      <div v-if="currentModel" class="related-models mt-16">
+        <h2 class="text-2xl font-bold mb-6">相关模型</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div 
+            v-for="model in models.filter(m => m.id !== modelId)" 
+            :key="model.id" 
+            class="related-model-card cursor-pointer"
+            @click="router.push({ name: 'model-detail', params: { id: model.id } })"
+          >
+            <div class="model-thumbnail h-40 bg-muted rounded-lg mb-3 overflow-hidden">
+              <TresCanvas shadows alpha>
+                <TresPerspectiveCamera :position="[0.2, 0.1, 0.1]" />
+                <OrbitControls enableDamping={false} enableZoom={false} enablePan={false} />
+                <Suspense>
+                  <GLTFModel :path="model.path" draco />
+                </Suspense>
+                <TresDirectionalLight :position="[-4, 8, 4]" :intensity="4" cast-shadow />
+              </TresCanvas>
+            </div>
+            <h3 class="font-medium">{{ model.name }}</h3>
+            <p class="text-sm text-foreground/70 line-clamp-1">{{ model.description }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.model-viewer-container {
-  height: 500px;
-  width: 100%;
+.model-info {
+  @apply p-4;
 }
 
-.download-button:disabled {
-  @apply opacity-70 cursor-not-allowed;
+.spec-item {
+  @apply p-3 bg-muted rounded-md;
+}
+
+.actions {
+  @apply flex flex-col md:flex-row gap-4;
+}
+
+.related-model-card {
+  @apply bg-background rounded-lg border border-border p-4 transition-all
+         hover:shadow-md hover:border-primary/50;
 }
 </style>

@@ -1,27 +1,25 @@
 <script setup>
-import { ref, onMounted, Suspense } from 'vue';
+import { ref, onMounted, Suspense, shallowRef, unref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { Box } from 'lucide-vue-next';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { TresCanvas, useRenderLoop } from '@tresjs/core';
-import { OrbitControls, GLTFModel as TresGLTF } from '@tresjs/cientos';
-
+import { OrbitControls, GLTFModel } from '@tresjs/cientos'
 // 注册 ScrollTrigger 插件
 gsap.registerPlugin(ScrollTrigger);
-
 const router = useRouter();
-
 // 3D模型数据
 const models = ref([
-  // { id: 'antonius', name: 'Antonius', path: '/res/antonius/scene.gltf' },
-  { id: 'basketball', name: 'Basketball', path: '/res/basketball/scene.gltf' },
-  { id: 'buddha', name: 'Buddha', path: '/res/buddha/scene.gltf' },
-  // { id: 'decoratedcup', name: 'Decorated Cup', path: '/res/decoratedcup/scene.gltf' },
-  { id: 'kookpot', name: 'Kookpot', path: '/res/kookpot/scene.gltf' }
+  // { id: 'antonius', name: 'Antonius', path: '/res/antonius/scene.gltf', description: '古典风格的装饰品，展现精湛的工艺和历史韵味。' },
+  { id: 'basketball', name: 'Basketball', path: '/res/basketball/scene.gltf', description: '高精度篮球3D模型，适用于体育游戏和虚拟现实应用。' },
+  { id: 'buddha', name: 'Buddha', path: '/res/buddha/scene.gltf', description: '精致的佛像模型，展现东方艺术的神秘与庄严。' },
+  // { id: 'decoratedcup', name: 'Decorated Cup', path: '/res/decoratedcup/scene.gltf', description: '精美装饰的杯子，适合用于室内场景和产品展示。' },
+  { id: 'kookpot', name: 'Kookpot', path: '/res/kookpot/scene.gltf', description: '精致的厨房用具模型，展现现代家居的实用与美观。' }
 ]);
 
-// 处理模型点击
+// 使用TresJS的useLoader钩子加载模型
+// const { nodes } = await useGLTF('/res/kookpot/scene.gltf', { draco: true })
+
+// 处理模型点击事件，导航到详情页
 const handleModelClick = (modelId) => {
   router.push({ name: 'model-detail', params: { id: modelId } });
 };
@@ -51,6 +49,29 @@ onMounted(() => {
       <h2 class="section-title">3D 模型展示</h2>
       <p class="section-description">浏览我们的3D模型集合，点击查看详情并下载</p>
 
+      <!-- Kookpot 3D模型展示 -->
+      <div class="kookpot-model-container mb-8">
+        <h3 class="text-xl font-semibold mb-4">Kookpot 3D模型</h3>
+        <div class="model-viewer  rounded-lg overflow-hidden border border-border">
+          <TresCanvas  shadows alpha>
+            <TresPerspectiveCamera :position="[0.2, 0.1, 0.1]" />
+            <OrbitControls />
+            <Suspense>
+              <GLTFModel path="/res/kookpot/scene.gltf" draco />
+            </Suspense>
+            <TresDirectionalLight :position="[-4, 8, 4]" :intensity="4" cast-shadow />
+          </TresCanvas>
+        </div>
+        <div class="mt-4 flex justify-center">
+          <button 
+            class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+            @click="handleModelClick('kookpot')"
+          >
+            查看详情
+          </button>
+        </div>
+      </div>
+
       <!-- 3D模型横向滑动列表 -->
       <div class="models-carousel overflow-x-auto py-4">
         <div class="flex space-x-6">
@@ -61,33 +82,23 @@ onMounted(() => {
             @click="handleModelClick(model.id)"
           >
             <div class="model-viewer">
-              <Suspense>
-                <template #default>
-                  <TresCanvas :window-size="false" alpha>
-                    <TresGLTF 
-                      :path="model.path" 
-                      :scale="[1, 1, 1]" 
-                      :rotation="[0, Math.PI / 4, 0]" 
-                      :disable-textures="true"
-                      :material-props="{ map: null }" 
-                      :material-type="'MeshBasicMaterial'"
-                    />
-                    <OrbitControls 
-                      :enable-zoom="false" 
-                      :enable-pan="false"
-                      :auto-rotate="true"
-                      :auto-rotate-speed="1"
-                    />
-                  </TresCanvas>
-                </template>
-                <template #fallback>
-                  <div class="flex items-center justify-center h-full w-full bg-background">
-                    <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-                  </div>
-                </template>
-              </Suspense>
+              <TresCanvas shadows alpha>
+                <TresPerspectiveCamera :position="[0.3, 0.5, 0.3]" />
+                <OrbitControls enableDamping={false} enableZoom={false} enablePan={false} />
+                <Suspense>
+                  <GLTFModel :path="model.path" draco />
+                </Suspense>
+                <TresDirectionalLight :position="[-4, 8, 4]" :intensity="4" cast-shadow />
+              </TresCanvas>
             </div>
             <h3 class="model-name">{{ model.name }}</h3>
+            <p class="model-description">{{ model.description.substring(0, 30) }}...</p>
+            <button 
+              class="mt-2 px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors w-full"
+              @click.stop="handleModelClick(model.id)"
+            >
+              查看详情
+            </button>
           </div>
         </div>
       </div>
@@ -113,11 +124,16 @@ onMounted(() => {
 }
 
 .model-viewer {
-  @apply w-full h-48 mb-4 rounded-md overflow-hidden;
+  @apply w-full h-64 mb-4 rounded-md overflow-hidden;
 }
 
 .model-name {
   @apply text-lg font-medium text-foreground text-center;
+}
+
+.model-description {
+  @apply text-sm text-foreground/70 text-center mb-2 line-clamp-2;
+  height: 2.5rem;
 }
 
 /* 滚动条样式 */
